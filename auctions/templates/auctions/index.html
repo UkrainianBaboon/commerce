@@ -10,11 +10,13 @@
                         <h1>Лот № {{lot.pk}}</h2>
                         <h3>{{ lot.title }}</h3>
                         <p>Категорія: {{lot.category}}</p>
-                        <img class="lot_photo" src="{{lot.photo}}" alt="Фото для лоту {{lot.title}}">
+                        <img class="lot_photo" src="{{lot.photo}}" alt=" Фото відсутнє">
                         {% comment %} <H1>{{ lot.title }}</H1> {% endcomment %}
                         {% comment %} <p>{{lot.description}}</p> {% endcomment %}
                         <h4>Початкова ціна: {{lot.first_bet}}₴</h4>
-                        <a href ={% url 'lot' lot.pk %}><button>перейти на сторінку</button></a>
+                        {% comment %} <a href ={% url 'lot' lot.pk %}><button>Детальна інформація</button></a> {% endcomment %}
+                        <a href ={% url 'lot' lot.pk %}><button type="button" class="btn btn-secondary">Детальна інформація</button></a>
+
                     </div>
             {% endfor %}
         </div>

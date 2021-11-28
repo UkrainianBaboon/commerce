@@ -1,21 +1,29 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
+from django.db.models import fields
+from django.forms.models import ModelForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django import forms
+from django.contrib.auth.decorators import login_required
 
 import auctions
 
 
 from .models import User, Lot, Category
 
-class NewLotForm(forms.Form):
-    new_lot_title = forms.CharField(max_length=64, label="Назва лоту")
-    new_lot_description  = forms.CharField(widget=forms.Textarea, max_length=512, label="Опис лоту")
-    new_lot_first_bet = forms.IntegerField(label="Початкова ставка")
-    new_lot_photo = forms.URLField(max_length=200, label="Фото")
-    new_lot_category = Category.objects.all()
+class NewLotForm(ModelForm):
+    class Meta:
+        model = Lot
+        fields = ["title", "description", "first_bet", "photo", "category"]
+        labels = {
+            'title': ('Назва'),
+            'description': ('Опис'),
+            'first_bet': ('Початкова ціна'),
+            'photo': ('Фото'),
+            'category': ('Категорія')
+        }
 
 
 def index(request):
@@ -81,7 +89,8 @@ def lot(request, id):
         # "id": id,
         "lot": lot
     })
-    
+
+@login_required(login_url='auctions/login.html')
 def create_lot(request):
     return render(request, "auctions/create.html", {
         "creation_form": NewLotForm
@@ -90,9 +99,10 @@ def create_lot(request):
 def save_lot(request):
     form = NewLotForm(request.POST)
     if form.is_valid:
-        Lot.title = request.POST.get('new_lot_title')
-        Lot.description = request.POST.get('new_lot_description')
-        Lot.photo = request.POST.get("new_lot_photo")
-        Lot.first_bet = request.POST.get("new_lot_first_bet")
+        form.description = request.POST.get('new_lot_title')
+        form.description = request.POST.get('new_lot_description')
+        form.photo = request.POST.get("new_lot_photo")
+        form.first_bet = request.POST.get("new_lot_first_bet")
+        form.save()
     return HttpResponseRedirect(reverse ("index"))
                                 

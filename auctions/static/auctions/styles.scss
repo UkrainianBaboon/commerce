@@ -27,6 +27,8 @@ body {
     padding: 10px;
     background-color: beige;
     border: 1px solid lightgrey;
+    // margin-top: 10px;
+    margin-bottom: 60px;
     img {
         max-width: 200px;
         max-height: 200px;
@@ -43,7 +45,23 @@ body {
 .lot_main_div {
     box-sizing: border-box;
     margin: 20px;
+    margin-bottom: 70px;
     img {
-        max-width: 40%;
+        max-width: 30%;
     }
+    button {
+        width: 140px;
+    }
+}
+.login_form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 5px;
+}
+.lot_creation_form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 100px;
 }

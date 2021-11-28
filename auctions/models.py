@@ -22,11 +22,11 @@ class Lot(models.Model):
     title = models.CharField(max_length=64)
     description  = models.TextField(max_length=512)
     first_bet = models.IntegerField()
-    photo = models.URLField(max_length=200)
+    photo = models.URLField(max_length=200, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="categories")
     
-    def __str__(self):
-        return f"{self.title}",{self.description}, {self.first_bet}, {self.photo}
+    # def __str__(self):
+    #     return f"{self.title}",{self.description}, {self.first_bet}, {self.photo}
 
 
 
