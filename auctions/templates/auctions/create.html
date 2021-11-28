@@ -3,4 +3,12 @@
 {% block body %}
 
 <H1>Baboon!!!</H1>
+
+<form action="{% url 'save_lot' %}" method="POST">
+    {% csrf_token %}
+
+
+    {{creation_form}}
+    <button type="submit">Створити лот</button>
+</form>
 {% endblock %}

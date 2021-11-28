@@ -24,6 +24,9 @@ class Lot(models.Model):
     first_bet = models.IntegerField()
     photo = models.URLField(max_length=200)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="categories")
+    
+    def __str__(self):
+        return f"{self.title}",{self.description}, {self.first_bet}, {self.photo}
 
 
 

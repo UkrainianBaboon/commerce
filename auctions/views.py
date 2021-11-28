@@ -3,10 +3,19 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django import forms
 
-from .models import User, Lot
+import auctions
 
-# class Create_lot
+
+from .models import User, Lot, Category
+
+class NewLotForm(forms.Form):
+    new_lot_title = forms.CharField(max_length=64, label="Назва лоту")
+    new_lot_description  = forms.CharField(widget=forms.Textarea, max_length=512, label="Опис лоту")
+    new_lot_first_bet = forms.IntegerField(label="Початкова ставка")
+    new_lot_photo = forms.URLField(max_length=200, label="Фото")
+    new_lot_category = Category.objects.all()
 
 
 def index(request):
@@ -74,5 +83,16 @@ def lot(request, id):
     })
     
 def create_lot(request):
+    return render(request, "auctions/create.html", {
+        "creation_form": NewLotForm
+    })
     
-    return render(request, "auctions/create.html")
+def save_lot(request):
+    form = NewLotForm(request.POST)
+    if form.is_valid:
+        Lot.title = request.POST.get('new_lot_title')
+        Lot.description = request.POST.get('new_lot_description')
+        Lot.photo = request.POST.get("new_lot_photo")
+        Lot.first_bet = request.POST.get("new_lot_first_bet")
+    return HttpResponseRedirect(reverse ("index"))
+                                
