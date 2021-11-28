@@ -1,0 +1,15 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <div class='lot_main_div'>
+        <h1>Лот № {{lot.pk}}</h2>
+        <h3>{{ lot.title }}</h3>
+        <h4>Категорія: {{lot.category}}</h4>
+        <img class="lot_photo" src="{{lot.photo}}" alt="Фото для лоту {{lot.title}}">
+        <p>{{lot.description}}</p>
+        <h4>Початкова ціна: {{lot.first_bet}}₴</h4>
+        <button>Зробити ставку</button>
+        <button>Відстежувати</button>
+    </div>
+{% endblock %}

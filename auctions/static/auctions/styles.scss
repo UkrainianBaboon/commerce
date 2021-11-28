@@ -1,0 +1,49 @@
+@font-face {
+    font-family: 'WesterlandC';
+    src: url('../fonts/WesterlandC.ttf');
+  }
+
+body {
+    padding: 10px;
+    text-align: center;
+    // font-family: 'WesterlandC';
+}
+
+.all_lots {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    text-align: center;
+    flex-wrap: wrap;
+}
+
+.lot {
+    // display: inline-block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 30%;
+    padding: 10px;
+    background-color: beige;
+    border: 1px solid lightgrey;
+    img {
+        max-width: 200px;
+        max-height: 200px;
+    }
+    .buttons {
+        box-sizing: border-box;
+    }
+}
+
+.main_title {
+    font-family: 'WesterlandC';
+}
+
+.lot_main_div {
+    box-sizing: border-box;
+    margin: 20px;
+    img {
+        max-width: 40%;
+    }
+}

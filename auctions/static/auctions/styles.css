@@ -1,0 +1,70 @@
+@font-face {
+  font-family: 'WesterlandC';
+  src: url("../fonts/WesterlandC.ttf");
+}
+
+body {
+  padding: 10px;
+  text-align: center;
+}
+
+.all_lots {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  text-align: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.lot {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 30%;
+  padding: 10px;
+  background-color: beige;
+  border: 1px solid lightgrey;
+}
+
+.lot img {
+  max-width: 200px;
+  max-height: 200px;
+}
+
+.lot .buttons {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.main_title {
+  font-family: 'WesterlandC';
+}
+
+.lot_main_div {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 20px;
+}
+
+.lot_main_div img {
+  max-width: 40%;
+}
+/*# sourceMappingURL=styles.css.map */

@@ -1,0 +1,25 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Активні лоти</h2>
+    
+    {% if user.is_authenticated %}
+        <div class = 'all_lots'>
+            {% for lot in lots %}
+                    <div class='lot'>
+                        <h1>Лот № {{lot.pk}}</h2>
+                        <h3>{{ lot.title }}</h3>
+                        <p>Категорія: {{lot.category}}</p>
+                        <img class="lot_photo" src="{{lot.photo}}" alt="Фото для лоту {{lot.title}}">
+                        {% comment %} <H1>{{ lot.title }}</H1> {% endcomment %}
+                        {% comment %} <p>{{lot.description}}</p> {% endcomment %}
+                        <h4>Початкова ціна: {{lot.first_bet}}₴</h4>
+                        <a href ={% url 'lot' lot.pk %}><button>перейти на сторінку</button></a>
+                    </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        Аби переглянути активні лоти необхідно зареєструватися.
+    {% endif %}
+
+{% endblock %}
