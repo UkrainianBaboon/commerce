@@ -84,9 +84,13 @@ def register(request):
     
 def lot(request, id):
     lot = Lot.objects.get(pk=id)
+    categories = Category.objects.filter(lots=id)
+        
     return render(request, "auctions/lot.html", {
         # "id": id,
-        "lot": lot
+        "lot": lot,
+        "categories": categories
+        # "category": Lot.objects.get(category=id)
     })
 
 @login_required(login_url='auctions/login.html')
