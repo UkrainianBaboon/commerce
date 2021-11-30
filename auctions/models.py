@@ -8,9 +8,9 @@ class User(AbstractUser):
 
 class Category(models.Model):
     category_title = models.CharField(max_length=64)
-    
+
     def __str__(self):
-        return f"{self.category_title}"
+        return self.category_title
     
 class Bet(models.Model):
     bet = models.FloatField()
@@ -23,10 +23,11 @@ class Lot(models.Model):
     description  = models.TextField(max_length=512)
     first_bet = models.IntegerField()
     photo = models.URLField(max_length=200, blank=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="categories")
+    category = models.ManyToManyField(Category, related_name="lots")
+        
     
-    # def __str__(self):
-    #     return f"{self.title}",{self.description}, {self.first_bet}, {self.photo}
+    def __str__(self):
+        return f"Лот №{self.pk} - {self.title}"
 
 
 

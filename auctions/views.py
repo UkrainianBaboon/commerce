@@ -28,8 +28,7 @@ class NewLotForm(ModelForm):
 
 def index(request):
     return render(request, "auctions/index.html",{
-        "lots": Lot.objects.all()
-    })
+        "lots": Lot.objects.all()})
 
 
 def login_view(request):
