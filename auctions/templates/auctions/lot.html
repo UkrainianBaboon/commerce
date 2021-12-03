@@ -1,17 +1,18 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
+{% csrf_token %}
 
     <div class='lot_main_div'>
         <h1>Лот № {{lot.pk}}</h2>
         <h3>{{ lot.title }}</h3>
-        {% comment %} <h4>Категорія: {{categories}}</h4> {% endcomment %}
-        {% comment %} <h4>Категорія: {% for category in categories %}{% if category != category.first %}{{category}}{% else %}{{category.lower()}}{% endif %}{% if category != categories.last %}, {% else %}.{% endif %}{% endfor %}</h4> {% endcomment %}
         <h4>Категорія: {% for category in categories %}{{category}}{% if category != categories.last %}, {% else %}.{% endif %}{% endfor %}</h4>
         <img class="lot_photo" src="{{lot.photo}}" alt="Фото відсутнє {{lot.title}}">
         <p>{{lot.description}}</p>
         <h4>Поточна ставка: {{lot.first_bet}}₴</h4>
         <button type="button" class="btn btn-primary">Зробити ставку</button>
-        <button type="button" class="btn btn-warning">Відстежувати</button>
+        <form action={% url 'watchlist' %}>
+            <button type="submit" class="btn btn-warning">Відстежувати</button>
+        </form>
     </div>
 {% endblock %}

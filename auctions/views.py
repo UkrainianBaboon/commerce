@@ -24,6 +24,10 @@ class NewLotForm(ModelForm):
             'photo': ('Фото'),
             'category': ('Категорія')
         }
+class WatchListForm(ModelForm):
+    class Meta:
+        model = Watchlist
+        fields = ["user", "lot"]
 
 
 def index(request):
@@ -87,10 +91,8 @@ def lot(request, id):
     categories = Category.objects.filter(lots=id)
         
     return render(request, "auctions/lot.html", {
-        # "id": id,
         "lot": lot,
         "categories": categories
-        # "category": Lot.objects.get(category=id)
     })
 
 @login_required(login_url='auctions/login.html')
@@ -120,9 +122,12 @@ def save_lot(request):
 #     })
     
 def watchlist(request):
+    # form = WatchListForm(request.POST)
+    # if form.is_valid:
     nick = request.user
     user_id = User.objects.get(username=nick).id
     lots = Lot.objects.filter(user=user_id)
+            
     # watched_lots = Watchlist.objects.lot
     return render(request, "auctions/watchlist.html",{
         "nick": nick,

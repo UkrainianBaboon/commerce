@@ -9,16 +9,9 @@
                     <div class='lot'>
                         <h1>Лот № {{lot.pk}}</h2>
                         <h3>{{ lot.title }}</h3>
-                        {% comment %} <p>Категорії: {{categories.category_title}}</p> {% endcomment %}
-                        <ul>
-                            {% comment %} {% for category in categories %}<li>{{category}}</li>{% endfor %} {% endcomment %}
-                        </ul>
                         <img class="lot_photo" src="{{lot.photo}}" alt=" Фото відсутнє">
                         <p>{{lot.description}}</p>
-                        {% comment %} <H1>{{ lot.title }}</H1> {% endcomment %}
-                        {% comment %} <p>{{lot.description}}</p> {% endcomment %}
                         <h4>Початкова ціна: {{lot.first_bet}}₴</h4>
-                        {% comment %} <a href ={% url 'lot' lot.pk %}><button>Детальна інформація</button></a> {% endcomment %}
                         <a href ={% url 'lot' lot.pk %}><button type="button" class="btn btn-secondary">Детальна інформація</button></a>
 
                     </div>

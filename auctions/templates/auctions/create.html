@@ -6,9 +6,6 @@
 
 <form action="{% url 'save_lot' %}" method="POST" class="lot_creation_form">
     {% csrf_token %}
-
-
-    {% comment %} <div class="creation_form_div">{{creation_form}}</div> {% endcomment %}
     {{creation_form}}
     <button type="submit">Створити лот</button>
 </form>

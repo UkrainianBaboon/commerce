@@ -38,6 +38,8 @@ class Lot(models.Model):
 class Watchlist(models.Model):
     user = models.ForeignKey(User, on_delete=CASCADE, related_name="list")
     lot = models.ManyToManyField(Lot, related_name="user")
+    def __str__(self):
+        return f"{self.user}"
 
 class Comment(models.Model):
     pass
