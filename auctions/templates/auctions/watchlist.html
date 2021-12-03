@@ -1,0 +1,9 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+{% csrf_token %}
+<h1>Список відстеження</h1>
+<p>{{nick}}</p>
+<p>{{lots}}</p>
+
+{% endblock %}

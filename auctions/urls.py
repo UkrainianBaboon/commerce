@@ -10,4 +10,5 @@ urlpatterns = [
     path("lot/<str:id>", views.lot, name="lot"),
     path("create", views.create_lot, name="create"),
     path("save", views.save_lot, name="save_lot"),
+    path("watchlist", views.watchlist, name="watchlist")
 ]

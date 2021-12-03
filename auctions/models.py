@@ -1,10 +1,15 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models.base import Model
+from django.db.models.deletion import CASCADE
+from django.db.models.fields.related import ForeignKey, ManyToManyField
+
+# from auctions.views import watchlist
 
 
 class User(AbstractUser):
-    pass
+    def __str__(self):
+        return self.username
 
 class Category(models.Model):
     category_title = models.CharField(max_length=64)
@@ -30,6 +35,9 @@ class Lot(models.Model):
         return f"Лот №{self.pk} - {self.title}"
 
 
+class Watchlist(models.Model):
+    user = models.ForeignKey(User, on_delete=CASCADE, related_name="list")
+    lot = models.ManyToManyField(Lot, related_name="user")
 
 class Comment(models.Model):
     pass

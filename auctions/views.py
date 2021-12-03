@@ -8,10 +8,10 @@ from django.urls import reverse
 from django import forms
 from django.contrib.auth.decorators import login_required
 
-import auctions
+# import auctions
 
 
-from .models import User, Lot, Category
+from .models import User, Lot, Category, Watchlist
 
 class NewLotForm(ModelForm):
     class Meta:
@@ -108,4 +108,24 @@ def save_lot(request):
         form.first_bet = request.POST.get("new_lot_first_bet")
         form.save()
     return HttpResponseRedirect(reverse ("index"))
+
+
+# def add_to_watchlist(request, id, username):
+#     lot = Lot.objects.get(pk=id)
+#     user = User.objects.get(username=username)
+    
+#     return render(request, "auctions/watchlist.html",{
+#         "lot": lot,
+#         "user": user
+#     })
+    
+def watchlist(request):
+    nick = request.user
+    user_id = User.objects.get(username=nick).id
+    lots = Lot.objects.filter(user=user_id)
+    # watched_lots = Watchlist.objects.lot
+    return render(request, "auctions/watchlist.html",{
+        "nick": nick,
+        "lots": lots
+})
                                 
