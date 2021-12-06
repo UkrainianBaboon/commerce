@@ -90,29 +90,40 @@ def lot(request, id):
     
     lot = Lot.objects.get(pk=id)
     categories = Category.objects.filter(lots=id)
+    user = User.objects.get(username=request.user)
+    if not user.list.filter(lot=lot):
+        watched = True
+    else:
+        watched = False
     if request.method == "POST":
-        user = User.objects.get(username=request.user)
         watchlist = Watchlist.objects.get(id=user.id)
         if request.POST.get("button")== "Відстежувати":
             if not user.list.filter(lot=lot):
                 watchlist.lot.add(lot)
                 watchlist.save()
+                watched = True
             else:
                 watchlist.lot.remove(lot)
                 watchlist.save()
-            return HttpResponseRedirect(reverse ("watchlist"))   
+                watched = False
+        else:
+            if not user.list.filter(lot=lot):
+                watchlist.lot.add(lot)
+                watchlist.save()
+                watched = True
+            else:
+                watchlist.lot.remove(lot)
+                watchlist.save()
+                watched = False
+            
+        return HttpResponseRedirect(reverse ("watchlist"))   
                 
     else:
-
-        # if request.method == "POST":
-        # watchlist = Watchlist.objects.get(id=nick.id)
-        # watchlist = Watchlist.objects.get(pk=user_id)
-        # parameters = {"watchlist": watchlist}
-        # form = WatchListForm(request.POST, instance=watchlist)
         return render(request, "auctions/lot.html", {
             "lot": lot,
             "categories": categories,
-            "id": id
+            "id": id,
+            "watched": watched
         })
         
     # return render(request, "auctions/lot.html", {

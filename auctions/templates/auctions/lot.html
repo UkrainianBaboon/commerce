@@ -12,7 +12,11 @@
         <button type="button" class="btn btn-primary">Зробити ставку</button>
         <form action="{% url 'lot' id %}" method="POST">
             {% csrf_token %}
-            <input type="submit" name='button' value="Відстежувати" class="btn btn-warning"></button>
+            {% if watched == True %}
+            <input type="submit" name='button' value="Відстежувати лот" class="btn btn-warning"></button>
+            {% else %}
+            <input type="submit" name='button' value="Не відстежувати" class="btn btn-warning"></button>
+            {% endif %}
         </form>
     </div>
 {% endblock %}
