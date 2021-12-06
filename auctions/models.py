@@ -29,6 +29,7 @@ class Lot(models.Model):
     first_bet = models.IntegerField()
     photo = models.URLField(max_length=200, blank=True)
     category = models.ManyToManyField(Category, related_name="lots")
+    author = models.ForeignKey(User, default="1", on_delete=CASCADE, related_name="lot")
         
     
     def __str__(self):
