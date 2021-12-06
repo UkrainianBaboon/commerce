@@ -1,7 +1,6 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-{% csrf_token %}
 
     <div class='lot_main_div'>
         <h1>Лот № {{lot.pk}}</h2>
@@ -11,8 +10,9 @@
         <p>{{lot.description}}</p>
         <h4>Поточна ставка: {{lot.first_bet}}₴</h4>
         <button type="button" class="btn btn-primary">Зробити ставку</button>
-        <form action={% url 'watchlist' %}>
-            <button type="submit" class="btn btn-warning">Відстежувати</button>
+        <form action="{% url 'lot' id %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" name='button' value="Відстежувати" class="btn btn-warning"></button>
         </form>
     </div>
 {% endblock %}
