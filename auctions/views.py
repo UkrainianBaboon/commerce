@@ -132,11 +132,20 @@ def lot(request, id):
     #     # "watchlist_form": WatchListForm
     # })
 
-@login_required(login_url='auctions/login.html')
+@login_required #(login_url='auctions/login.html')
 def create_lot(request):
-    return render(request, "auctions/create.html", {
-        "creation_form": NewLotForm
-    })
+    if request.method == "POST":
+        form = NewLotForm(request.POST, request.FILES)
+        user = User.objects.get(username=request.user)
+        if form.is_valid:
+            new_lot = form.save(commit=False)
+            new_lot.author = user
+            new_lot.save()
+            return HttpResponseRedirect(reverse("index"))
+    else:
+        return render(request, "auctions/create.html", {
+            "form": NewLotForm()
+        })
     
 def save_lot(request):
     form = NewLotForm(request.POST)

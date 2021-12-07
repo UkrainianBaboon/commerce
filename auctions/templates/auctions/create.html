@@ -4,9 +4,9 @@
 
 <h1>Створення лоту</h1>
 
-<form action="{% url 'save_lot' %}" method="POST" class="lot_creation_form">
+<form action="{% url 'create' %}" method="POST" class="lot_creation_form">
     {% csrf_token %}
-    {{creation_form}}
+    {{form}}
     <button type="submit">Створити лот</button>
 </form>
 {% endblock %}
