@@ -135,10 +135,10 @@ def lot(request, id):
 @login_required #(login_url='auctions/login.html')
 def create_lot(request):
     if request.method == "POST":
-        form = NewLotForm(request.POST, request.FILES)
+        form = NewLotForm(request.POST)
         user = User.objects.get(username=request.user)
         if form.is_valid:
-            new_lot = form.save(commit=False)
+            new_lot = form.save()
             new_lot.author = user
             new_lot.save()
             return HttpResponseRedirect(reverse("index"))
