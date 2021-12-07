@@ -15,6 +15,7 @@ body {
     justify-content: space-evenly;
     text-align: center;
     flex-wrap: wrap;
+    
 }
 
 .lot {
@@ -36,10 +37,17 @@ body {
     .buttons {
         box-sizing: border-box;
     }
+
+    h3 {
+        font-family: 'WesterlandC','sans-serif';
+    }
+    h4 {
+        font-family: 'WesterlandC', 'sans-serif';
+    }
 }
 
 .main_title {
-    font-family: 'WesterlandC';
+    font-family: 'WesterlandC', 'sans-serif';
 }
 
 .lot_main_div {
@@ -64,4 +72,9 @@ body {
     align-items: center;
     flex-direction: column;
     margin-bottom: 100px;
+}
+
+.watchlsit_header {
+    margin-bottom: 25px;
+    
 }

@@ -2,14 +2,14 @@
 
 {% block body %}
 {% csrf_token %}
-<h1>Список відстеження</h1>
-<p>{{nick}}</p>
-<p>{{lots}}</p>
+<h1 class="watchlsit_header">Список відстеження</h1>
 
+
+<div class='all_lots'>
 {% for lot in lots %}
                     <div class='lot'>
-                        <h1>Лот № {{lot.pk}}</h2>
-                        <h3>{{ lot.title }}</h3>
+                        <h3>Лот № {{lot.pk}}</h3>
+                        <h2>{{ lot.title }}</h2>
                         <img class="lot_photo" src="{{lot.photo}}" alt=" Фото відсутнє">
                         <p>{{lot.description}}</p>
                         <h4>Початкова ціна: {{lot.first_bet}}₴</h4>
@@ -17,5 +17,6 @@
 
                     </div>
             {% endfor %}
+</div>
 
 {% endblock %}

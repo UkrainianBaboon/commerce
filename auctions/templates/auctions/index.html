@@ -7,8 +7,8 @@
         <div class = 'all_lots'>
             {% for lot in lots %}
                     <div class='lot'>
-                        <h1>Лот № {{lot.pk}}</h2>
-                        <h3>{{ lot.title }}</h3>
+                        <h3>Лот № {{lot.pk}}</h5>
+                        <h2>{{ lot.title }}</h2>
                         <img class="lot_photo" src="{{lot.photo}}" alt=" Фото відсутнє">
                         <p>{{lot.description}}</p>
                         <h4>Початкова ціна: {{lot.first_bet}}₴</h4>
