@@ -8,7 +8,7 @@
         <h4>Категорія: {% for category in categories %}{{category}}{% if category != categories.last %}, {% else %}.{% endif %}{% endfor %}</h4>
         <img class="lot_photo" src="{{lot.photo}}" alt="Фото відсутнє {{lot.title}}">
         <p>{{lot.description}}</p>
-        <h4>Поточна ставка: {{lot.first_bet}}₴</h4>
+        <h4>Поточна ставка - {{lot.first_bet}}₴</h4>
         <button type="button" class="btn btn-primary">Зробити ставку</button>
         <form action="{% url 'lot' id %}" method="POST">
             {% csrf_token %}
