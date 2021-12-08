@@ -55,12 +55,8 @@ body {
           box-sizing: border-box;
 }
 
-.lot h3 {
+.lot h3, .lot h4 {
   font-family: 'WesterlandC','sans-serif';
-}
-
-.lot h4 {
-  font-family: 'WesterlandC', 'sans-serif';
 }
 
 .main_title {
@@ -110,7 +106,8 @@ body {
   margin-bottom: 100px;
 }
 
-.watchlsit_header {
+.watchlsit_header, .active_lots_header {
   margin-bottom: 25px;
+  font-family: 'WesterlandC', 'sans-serif';
 }
 /*# sourceMappingURL=styles.css.map */
