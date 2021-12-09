@@ -9,7 +9,8 @@
             {% for category in categories %}{{category}}{% if category != categories.last %}, {% else %}.{% endif %}{% endfor %}</h4>
         <img class="lot_photo" src="{{lot.photo}}" alt="Фото відсутнє {{lot.title}}">
         <p>{{lot.description}}</p>
-        <h4>Поточна ставка - {{lot.first_bet}}₴</h4>
+        <h4>Поточна ставка - {{max_bet}}₴</h4>
+        {% comment %} <h4>Поточна ставка - {{lot.first_bet}}₴</h4> {% endcomment %}
         <button type="button" class="btn btn-primary">Зробити ставку</button>
         <form action="{% url 'lot' id %}" method="POST">
             {% csrf_token %}
@@ -19,5 +20,6 @@
             <input type="submit" name='button' value="Не відстежувати" class="btn btn-warning"></button>
             {% endif %}
         </form>
+        {{bets}}
     </div>
 {% endblock %}

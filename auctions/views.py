@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 # import auctions
 
 
-from .models import User, Lot, Category, Watchlist
+from .models import Bet, User, Lot, Category, Watchlist
 
 class NewLotForm(ModelForm):
     class Meta:
@@ -91,6 +91,11 @@ def lot(request, id):
     lot = Lot.objects.get(pk=id)
     categories = Category.objects.filter(lots=id)
     user = User.objects.get(username=request.user)
+    bets = Bet.objects.filter(lot=id)
+    if len(bets) >= 1:
+        max_bet = bets[len(bets)-1].bet
+    else:
+        max_bet = lot.first_bet
     if not user.list.filter(lot=lot):
         watched = True
     else:
@@ -121,9 +126,11 @@ def lot(request, id):
     else:
         return render(request, "auctions/lot.html", {
             "lot": lot,
+            "bets": bets,
             "categories": categories,
             "id": id,
-            "watched": watched
+            "watched": watched,
+            "max_bet": max_bet
         })
         
     # return render(request, "auctions/lot.html", {

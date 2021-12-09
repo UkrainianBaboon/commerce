@@ -12,7 +12,7 @@
                         <h2>{{ lot.title }}</h2>
                         <img class="lot_photo" src="{{lot.photo}}" alt=" Фото відсутнє">
                         <p>{{lot.description}}</p>
-                        <h4>Початкова ціна - {{lot.first_bet}}₴</h4>
+                        <h4>Поточна ціна - {{lot.first_bet}}₴</h4>
                         <a href ={% url 'lot' lot.pk %}><button type="button" class="btn btn-secondary">Детальна інформація</button></a>
 
                     </div>

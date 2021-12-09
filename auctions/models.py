@@ -16,13 +16,7 @@ class Category(models.Model):
 
     def __str__(self):
         return f"{self.category_title}"
-    
-class Bet(models.Model):
-    bet = models.FloatField()
-    
-    def __str__(self):
-        return f"{self.bet}"
-    
+     
 class Lot(models.Model):
     title = models.CharField(max_length=64)
     description  = models.TextField(max_length=512)
@@ -30,10 +24,18 @@ class Lot(models.Model):
     photo = models.URLField(max_length=200, blank=True)
     category = models.ManyToManyField(Category, related_name="lots")
     author = models.ForeignKey(User, default="1", on_delete=CASCADE, related_name="lot")
+    is_open = models.BooleanField(default=1)
         
     
     def __str__(self):
         return f"Лот №{self.pk} - {self.title}"
+
+class Bet(models.Model):
+    lot = models.ForeignKey(Lot, on_delete=CASCADE, blank=True, default=1, related_name="bet")
+    bet = models.IntegerField(blank=True)
+    client = models.ForeignKey(User, on_delete=CASCADE, blank=True, default=1, related_name="client")
+    def __str__(self):
+        return f"{self.client}: {self.lot} - {self.bet}"
 
 
 class Watchlist(models.Model):
