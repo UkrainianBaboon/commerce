@@ -1,9 +1,10 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.db.models import fields
+from django.db.utils import Error
 from django.forms.models import ModelForm
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from django import forms
 from django.contrib.auth.decorators import login_required
@@ -29,10 +30,18 @@ class WatchListForm(ModelForm):
         model = Watchlist
         fields = ["lot"]
 
+class NewBetForm(ModelForm):
+    class Meta:
+        model = Bet
+        fields = ["bet"]
 
 def index(request):
+    bets = Bet.objects.all()
+    # max_bet = bets[len(bets)-1].bet
     return render(request, "auctions/index.html",{
-        "lots": Lot.objects.all()})
+        "lots": Lot.objects.all(),
+        "bets": bets
+        })
 
 
 def login_view(request):
@@ -130,7 +139,10 @@ def lot(request, id):
             "categories": categories,
             "id": id,
             "watched": watched,
-            "max_bet": max_bet
+            "max_bet": max_bet,
+            "new_bet_form": NewBetForm,
+            "user": user
+            
         })
         
     # return render(request, "auctions/lot.html", {
@@ -206,4 +218,23 @@ def watchlist(request):
             "nick": nick,
             "lots": lots
     })
+@login_required
+def bet(request, id):
+    lot = Lot.objects.get(pk=id)
+    categories = Category.objects.filter(lots=id)
+    form = NewBetForm(request.POST)
+    user = User.objects.get(username=request.user)
+    if form.is_valid:
+        if int(request.POST.get("bet")) <= lot.first_bet:
+            return redirect("index")
+        else:
+            new_bet = form.save()
+            new_bet.lot = lot
+            new_bet.bet = request.POST.get("bet")
+            lot.first_bet = new_bet.bet
+            new_bet.client = user
+            new_bet.save()
+            lot.save()
+    
+    return redirect("lot", id=id)
                                 

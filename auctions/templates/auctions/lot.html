@@ -11,7 +11,6 @@
         <p>{{lot.description}}</p>
         <h4>Поточна ставка - {{max_bet}}₴</h4>
         {% comment %} <h4>Поточна ставка - {{lot.first_bet}}₴</h4> {% endcomment %}
-        <button type="button" class="btn btn-primary">Зробити ставку</button>
         <form action="{% url 'lot' id %}" method="POST">
             {% csrf_token %}
             {% if watched == True %}
@@ -21,5 +20,10 @@
             {% endif %}
         </form>
         {{bets}}
+        <form action="{% url 'bet' id %}" method="POST">
+            {% csrf_token %}
+            {{new_bet_form}}
+            <button type="submit" name ='button' value="Зробити ставку" class="btn btn-primary">Зробити ставку</button>
+        </form>
     </div>
 {% endblock %}
