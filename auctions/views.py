@@ -104,7 +104,10 @@ def lot(request, id):
     if len(bets) >= 1:
         max_bet = bets[len(bets)-1].bet
     else:
-        max_bet = lot.first_bet
+        max_bet = lot.default_bet
+    if lot.first_bet != max_bet:
+        lot.first_bet = max_bet
+        lot.save()
     if not user.list.filter(lot=lot):
         watched = True
     else:
@@ -159,6 +162,7 @@ def create_lot(request):
         if form.is_valid:
             new_lot = form.save()
             new_lot.author = user
+            new_lot.default_bet = new_lot.first_bet
             new_lot.save()
             return HttpResponseRedirect(reverse("index"))
     else:

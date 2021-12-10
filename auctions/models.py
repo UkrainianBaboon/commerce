@@ -21,6 +21,7 @@ class Lot(models.Model):
     title = models.CharField(max_length=64)
     description  = models.TextField(max_length=512)
     first_bet = models.IntegerField()
+    default_bet = models.IntegerField()
     photo = models.URLField(max_length=200, blank=True)
     category = models.ManyToManyField(Category, related_name="lots")
     author = models.ForeignKey(User, default="1", on_delete=CASCADE, related_name="lot")
