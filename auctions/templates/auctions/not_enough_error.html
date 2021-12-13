@@ -1,0 +1,7 @@
+{% extends 'auctions/layout.html' %}
+
+{% block body %}
+<H1>Помилка: "Ваша ставка замала".</H1>
+
+<a href="{% url 'lot' id %}"><button>Спробувати знову</button></a>
+{% endblock body %}

@@ -11,5 +11,6 @@ urlpatterns = [
     path("create", views.create_lot, name="create"),
     path("save", views.save_lot, name="save_lot"),
     path("watchlist", views.watchlist, name="watchlist"),
-    path("bet/<str:id>", views.bet, name="bet")
+    path("bet/<str:id>", views.bet, name="bet"),
+    path("close/<str:id>", views.close, name="close")
 ]

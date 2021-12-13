@@ -34,6 +34,9 @@ class NewBetForm(ModelForm):
     class Meta:
         model = Bet
         fields = ["bet"]
+        labels = {
+            "bet": ('Ваша ставка')
+        }
 
 def index(request):
     bets = Bet.objects.all()
@@ -101,10 +104,12 @@ def lot(request, id):
     categories = Category.objects.filter(lots=id)
     user = User.objects.get(username=request.user)
     bets = Bet.objects.filter(lot=id)
+    sold = True
     if len(bets) >= 1:
         max_bet = bets[len(bets)-1].bet
     else:
         max_bet = lot.default_bet
+        sold = False
     if lot.first_bet != max_bet:
         lot.first_bet = max_bet
         lot.save()
@@ -144,7 +149,8 @@ def lot(request, id):
             "watched": watched,
             "max_bet": max_bet,
             "new_bet_form": NewBetForm,
-            "user": user
+            "user": user,
+            "sold": sold
             
         })
         
@@ -229,8 +235,13 @@ def bet(request, id):
     form = NewBetForm(request.POST)
     user = User.objects.get(username=request.user)
     if form.is_valid:
-        if int(request.POST.get("bet")) <= lot.first_bet:
-            return redirect("index")
+        if not request.POST.get("bet"):
+            pass
+        elif int(request.POST.get("bet")) <= lot.first_bet:
+            return render(request, "auctions/not_enough_error.html",{
+                "lot": lot,
+                "id": id
+            })
         else:
             new_bet = form.save()
             new_bet.lot = lot
@@ -241,4 +252,13 @@ def bet(request, id):
             lot.save()
     
     return redirect("lot", id=id)
-                                
+
+def close(request, id):
+    lot = Lot.objects.get(pk=id)
+    if lot.is_open == True:
+        lot.is_open = False
+        lot.save()
+    else:
+        lot.is_open = True
+        lot.save()
+    return redirect("lot", id=id)
