@@ -31,6 +31,17 @@
                 {{new_bet_form}}
                 <button type="submit" name ='button' value="Зробити ставку" class="btn btn-primary">Зробити ставку</button>
             </form>
+            <h4>Коментарі:</h4>
+            <ul>
+                {% for comment in comments %}
+                <li>{{comment.user}} - {{comment.comment}}</li>
+                {% endfor %}
+            </ul>
+            <form action="{% url 'comment' id %}" method="POST">
+                {% csrf_token %}
+                {{new_comment_form}}
+                <button type="submit" name ='button' value="Залишити коментар" class="btn btn-primary">Залишити коментар</button>
+            </form>
             {% if user == lot.author %}
             <form action="{% url 'close' id %}" method="POST">
                 {% csrf_token %}

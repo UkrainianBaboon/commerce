@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 # import auctions
 
 
-from .models import Bet, User, Lot, Category, Watchlist
+from .models import Bet, Comment, User, Lot, Category, Watchlist
 
 class NewLotForm(ModelForm):
     class Meta:
@@ -36,6 +36,13 @@ class NewBetForm(ModelForm):
         fields = ["bet"]
         labels = {
             "bet": ('Ваша ставка')
+        }
+class NewCommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ["comment"]
+        labels = {
+            "comment": ('Напишіть коментар')
         }
 
 def index(request):
@@ -104,6 +111,7 @@ def lot(request, id):
     categories = Category.objects.filter(lots=id)
     user = User.objects.get(username=request.user)
     bets = Bet.objects.filter(lot=id)
+    comments = Comment.objects.filter(lot=id)
     sold = True
     if len(bets) >= 1:
         max_bet = bets[len(bets)-1].bet
@@ -150,7 +158,9 @@ def lot(request, id):
             "max_bet": max_bet,
             "new_bet_form": NewBetForm,
             "user": user,
-            "sold": sold
+            "sold": sold,
+            "new_comment_form": NewCommentForm,
+            "comments": comments
             
         })
         
@@ -231,7 +241,6 @@ def watchlist(request):
 @login_required
 def bet(request, id):
     lot = Lot.objects.get(pk=id)
-    categories = Category.objects.filter(lots=id)
     form = NewBetForm(request.POST)
     user = User.objects.get(username=request.user)
     if form.is_valid:
@@ -262,3 +271,19 @@ def close(request, id):
         lot.is_open = True
         lot.save()
     return redirect("lot", id=id)
+
+@login_required
+def comment(request, id):
+    lot = Lot.objects.get(pk=id)
+    form = NewCommentForm(request.POST)
+    user = User.objects.get(username=request.user)
+    if form.is_valid:
+        if not request.POST.get("bet"):
+            pass
+        else:
+            new_comment = form.save()
+            new_comment.lot = lot
+            new_comment.comment = request.POST.get("comment")
+            new_comment.user = user
+            new_comment.save()
+        return redirect("lot", id=id)

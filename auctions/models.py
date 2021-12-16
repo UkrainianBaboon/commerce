@@ -46,5 +46,8 @@ class Watchlist(models.Model):
         return f"{self.id}) {self.user}"
 
 class Comment(models.Model):
-    pass
-
+    user = models.ForeignKey(User, default=1, on_delete=CASCADE, related_name="author")
+    comment = models.CharField(max_length=200, blank=True)
+    lot = models.ForeignKey(Lot, on_delete=CASCADE, blank=True, default=1, related_name="comments")
+    def __str__(self):
+        return f"Лот \"{self.lot.title}\" - {self.user}: {self.comment}"
