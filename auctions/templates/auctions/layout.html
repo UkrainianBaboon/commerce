@@ -24,6 +24,9 @@
                 <a class="nav-link" href="{% url 'create' %}">Створити лот</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="{% url 'category' %}">Категорії</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{% url 'watchlist' %}">Список відстеження</a>
             </li>
             {% if user.is_authenticated %}

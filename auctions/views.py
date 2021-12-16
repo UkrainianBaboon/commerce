@@ -9,6 +9,8 @@ from django.urls import reverse
 from django import forms
 from django.contrib.auth.decorators import login_required
 
+import auctions
+
 # import auctions
 
 
@@ -287,3 +289,39 @@ def comment(request, id):
             new_comment.user = user
             new_comment.save()
         return redirect("lot", id=id)
+    
+def category(request):
+    categories = Category.objects.all()
+    return render (request, "auctions/categories_list.html",{
+        "categories": categories
+    })
+    
+def category_item(request, title):
+    lot = Lot.objects.all()
+    if title == "guns":
+        lot = lot.filter(category=1)
+        category = "Зброя"
+    elif title == "horses":
+        lot = lot.filter(category=2)
+        category = "Коні"
+    elif title == "clothes":
+        lot = lot.filter(category=3)
+        category = "Одяг"
+    elif title == "tobacco":
+        category = "Тютюнові вироби"
+        lot = lot.filter(category=4)
+    elif title == "cows":
+        lot = lot.filter(category=5)
+        category = "Рогата худоба"
+    elif title == "comunication-devices":
+        lot = lot.filter(category=6)
+    elif title == "apes":
+        category = "Примати"
+        lot = lot.filter(category=7)
+    elif title == "food-and-drinks":
+        lot = lot.filter(category=8)
+        category = "Їжа та напої"
+    return render(request, "auctions/category.html",{
+        "category": category,
+        "lots": lot
+    })
