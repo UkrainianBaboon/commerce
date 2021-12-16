@@ -13,6 +13,7 @@ class User(AbstractUser):
 
 class Category(models.Model):
     category_title = models.CharField(max_length=64)
+    eng_title = models.CharField(max_length=64, blank=True)
 
     def __str__(self):
         return f"{self.category_title}"

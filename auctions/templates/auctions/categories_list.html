@@ -3,7 +3,7 @@
 {% block body %}
 {% for category in categories %}
 <ul>
-    <li><h4>{{category}}</h4></li>
+    <li><h4><a href="category/{{category.eng_title}}">{{category}}</a></h4></li>
 </ul>
 {% endfor %}
 {% endblock body %}
