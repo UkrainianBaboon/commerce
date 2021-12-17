@@ -130,25 +130,14 @@ def lot(request, id):
     else:
         watched = False
     if request.method == "POST":
-        watchlist = Watchlist.objects.get(id=user.id)
-        if request.POST.get("button")== "Відстежувати":
-            if not user.list.filter(lot=lot):
-                watchlist.lot.add(lot)
-                watchlist.save()
-                watched = True
-            else:
-                watchlist.lot.remove(lot)
-                watchlist.save()
-                watched = False
+        if request.POST.get("button")== "Відстежувати лот":
+            watchlist = Watchlist()
+            watchlist.lot = lot
+            watchlist.user = user
+            watchlist.save()
         else:
-            if not user.list.filter(lot=lot):
-                watchlist.lot.add(lot)
-                watchlist.save()
-                watched = True
-            else:
-                watchlist.lot.remove(lot)
-                watchlist.save()
-                watched = False
+            watchlist = Watchlist.objects.filter(user=user)
+            watchlist.get(lot=lot).delete()
             
         return HttpResponseRedirect(reverse ("watchlist"))   
                 
@@ -202,27 +191,25 @@ def save_lot(request):
     
 @login_required (login_url="login")
 def watchlist(request):
-    nick = request.user
-    user_id = User.objects.get(username=nick).id
-    lots = Lot.objects.filter(user=user_id)
-
-    if request.method == "POST":
-        watchlist = Watchlist.objects.get(id=nick.id)
-        form = WatchListForm(request.POST, instance=watchlist)
-        new_item = form.fields
-        new_items = form.fields
+    user = User.objects.get(username=request.user)
+    watchlist = Watchlist.objects.filter(user=user)
+    # if request.method == "POST":
+    #     watchlist = Watchlist.objects.get(id=nick.id)
+    #     form = WatchListForm(request.POST, instance=watchlist)
+    #     new_item = form.fields
+    #     new_items = form.fields
         
 
-        if form.is_valid():                        
-            watchlist.lot.add(new_item)
-            watchlist.save()
-        return HttpResponseRedirect(reverse ("watchlist"))
+    #     if form.is_valid():                        
+    #         watchlist.lot.add(new_item)
+    #         watchlist.save()
+    #     return HttpResponseRedirect(reverse ("watchlist"))
         
-    else:
-        return render(request, "auctions/watchlist.html",{
-            "nick": nick,
-            "lots": lots
-    })
+    # else:
+    return render(request, "auctions/watchlist.html",{
+        "nick": user,
+        "lots": watchlist
+})
 @login_required (login_url="login")
 def bet(request, id):
     lot = Lot.objects.get(pk=id)

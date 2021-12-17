@@ -209,4 +209,9 @@ h1 {
 .category_list li a {
   color: black;
 }
+
+.category_header {
+  font-family: 'WesterlandC', 'sans-serif';
+  font-size: 2.5rem;
+}
 /*# sourceMappingURL=styles.css.map */
