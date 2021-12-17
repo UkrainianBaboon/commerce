@@ -1,8 +1,8 @@
-*.pyc
+# *.pyc
 # *.sql
 .vscode/
 .idea/
 /week_3/TEST/
-__pycache__/
+# __pycache__/
 week_3/wiki/encyclopedia/__pycache__/__init__.cpython-38.pyc
 
