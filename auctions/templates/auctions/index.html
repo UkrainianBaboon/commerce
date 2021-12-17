@@ -3,30 +3,24 @@
 {% block body %}
     <h2 class="h2_main_headers">Активні лоти</h2>
     
-    {% if user.is_authenticated %}
-        <div class = 'all_lots'>
-            {% for lot in lots %}
+<div class = 'all_lots'>
+{% for lot in lots %}
 
-            {% comment %} {% if lot.is_open == True %} {% endcomment %}
-                    <div class='lot'>
-                        <h3>Лот № {{lot.pk}}</h5>
-                        <h2 class>{{ lot.title }}</h2>
-                        <img class="lot_photo" src="{{lot.photo}}" alt=" Фото відсутнє">
-                        <p>{{lot.description}}</p>
-                        {% if lot.is_open == True %}
-                        <h4>Поточна ціна - {{lot.first_bet}}₴</h4>
-                        {% else %}
-                        <h4>Торги завершено</h4>
-                        {% endif %}
-                        <a href ={% url 'lot' lot.pk %}><button type="button" class="btn btn-secondary">Детальна інформація</button></a>
+    <div class='lot'>
+        <h3>Лот № {{lot.pk}}</h5>
+        <h2 class>{{ lot.title }}</h2>
+        <img class="lot_photo" src="{{lot.photo}}" alt=" Фото відсутнє">
+        <p>{{lot.description}}</p>
+        {% if lot.is_open == True %}
+        <h4>Поточна ціна - {{lot.first_bet}}₴</h4>
+        {% else %}
+        <h4>Торги завершено</h4>
+        {% endif %}
+        <a href ={% url 'lot' lot.pk %}><button type="button" class="btn btn-secondary">Детальна інформація</button></a>
 
-                    </div>
-            {% comment %} {% endif %} {% endcomment %}
+    </div>
 
-            {% endfor %}
-        </div>
-    {% else %}
-        Аби переглянути активні лоти необхідно зареєструватися.
-    {% endif %}
+{% endfor %}
+</div>
 
 {% endblock %}

@@ -6,7 +6,6 @@
 body {
     padding: 10px;
     text-align: center;
-    // font-family: 'WesterlandC';
 }
 
 .all_lots {
@@ -19,7 +18,6 @@ body {
 }
 
 .lot {
-    // display: inline-block;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -28,7 +26,6 @@ body {
     padding: 10px;
     background-color: beige;
     border: 1px solid lightgrey;
-    // margin-top: 10px;
     margin-bottom: 40px;
     img {
         max-width: 200px;

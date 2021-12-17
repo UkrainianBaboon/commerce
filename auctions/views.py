@@ -49,7 +49,6 @@ class NewCommentForm(ModelForm):
 
 def index(request):
     bets = Bet.objects.all()
-    # max_bet = bets[len(bets)-1].bet
     return render(request, "auctions/index.html",{
         "lots": Lot.objects.all(),
         "bets": bets
@@ -107,8 +106,9 @@ def register(request):
     else:
         return render(request, "auctions/register.html")
     
+@login_required (login_url="login")
 def lot(request, id):
-    
+
     lot = Lot.objects.get(pk=id)
     categories = Category.objects.filter(lots=id)
     user = User.objects.get(username=request.user)
@@ -166,13 +166,9 @@ def lot(request, id):
             
         })
         
-    # return render(request, "auctions/lot.html", {
-    #     "lot": lot,
-    #     "categories": categories,
-    #     # "watchlist_form": WatchListForm
-    # })
 
-@login_required #(login_url='auctions/login.html')
+
+@login_required (login_url="login")
 def create_lot(request):
     if request.method == "POST":
         form = NewLotForm(request.POST)
@@ -199,15 +195,9 @@ def save_lot(request):
     return HttpResponseRedirect(reverse ("index"))
 
 
-# def add_to_watchlist(request, id, username):
-#     lot = Lot.objects.get(pk=id)
-#     user = User.objects.get(username=username)
+
     
-#     return render(request, "auctions/watchlist.html",{
-#         "lot": lot,
-#         "user": user
-#     })
-    
+@login_required (login_url="login")
 def watchlist(request):
     nick = request.user
     user_id = User.objects.get(username=nick).id
@@ -215,32 +205,22 @@ def watchlist(request):
 
     if request.method == "POST":
         watchlist = Watchlist.objects.get(id=nick.id)
-        # watchlist = Lot.objects.filter(user=user_id)
-        # parameters = {"watchlist": watchlist}
         form = WatchListForm(request.POST, instance=watchlist)
         new_item = form.fields
         new_items = form.fields
         
-        #   !!! Проблема десь тут !!!
-        # new_item = 1                #   !!! Проблема десь тут !!!
-        if form.is_valid():                        #
+
+        if form.is_valid():                        
             watchlist.lot.add(new_item)
-            # watchlist.lot.remove(new_item)
             watchlist.save()
         return HttpResponseRedirect(reverse ("watchlist"))
-            # form.lot = request.POST.get('lot')
         
     else:
-        # nick = request.user
-        # user_id = User.objects.get(username=nick).id
-        # lots = Lot.objects.filter(user=user_id)
-
-        # watched_lots = Watchlist.objects.lot
         return render(request, "auctions/watchlist.html",{
             "nick": nick,
             "lots": lots
     })
-@login_required
+@login_required (login_url="login")
 def bet(request, id):
     lot = Lot.objects.get(pk=id)
     form = NewBetForm(request.POST)
@@ -264,6 +244,7 @@ def bet(request, id):
     
     return redirect("lot", id=id)
 
+@login_required (login_url="login")
 def close(request, id):
     lot = Lot.objects.get(pk=id)
     if lot.is_open == True:
@@ -274,7 +255,7 @@ def close(request, id):
         lot.save()
     return redirect("lot", id=id)
 
-@login_required
+@login_required (login_url="login")
 def comment(request, id):
     lot = Lot.objects.get(pk=id)
     form = NewCommentForm(request.POST)
