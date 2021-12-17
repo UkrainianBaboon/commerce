@@ -1,7 +1,7 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2 class="active_lots_header">Активні лоти</h2>
+    <h2 class="h2_main_headers">Активні лоти</h2>
     
     {% if user.is_authenticated %}
         <div class = 'all_lots'>
@@ -10,7 +10,7 @@
             {% comment %} {% if lot.is_open == True %} {% endcomment %}
                     <div class='lot'>
                         <h3>Лот № {{lot.pk}}</h5>
-                        <h2>{{ lot.title }}</h2>
+                        <h2 class>{{ lot.title }}</h2>
                         <img class="lot_photo" src="{{lot.photo}}" alt=" Фото відсутнє">
                         <p>{{lot.description}}</p>
                         {% if lot.is_open == True %}

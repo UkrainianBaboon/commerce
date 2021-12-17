@@ -2,11 +2,11 @@
 
 {% block body %}
 
-<h1>Створення лоту</h1>
+<h2 class="h2_main_headers">Створення лоту</h2>
 
 <form action="{% url 'create' %}" method="POST" class="lot_creation_form">
     {% csrf_token %}
     {{form}}
-    <button type="submit">Створити лот</button>
+    <button type="submit" class="btn btn-primary">Створити лот</button>
 </form>
 {% endblock %}

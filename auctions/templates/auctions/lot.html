@@ -3,23 +3,27 @@
 {% block body %}
 
     <div class='lot_main_div'>
-        <h1>Лот № {{lot.pk}}</h2>
+        <h2>Лот № {{lot.pk}}</h2>
         <h3>{{ lot.title }}</h3>
-        <h4>{% if categories.first == categories.last %}Категорія: {% else %}Категорії: {% endif %}
+        <h5>{% if categories.first == categories.last %}Категорія: {% else %}Категорії: {% endif %}
             {% for category in categories %}{{category}}{% if category != categories.last %}, {% else %}.{% endif %}{% endfor %}</h4>
+        <h4>Автор - {{lot.author}}</h4>
         <img class="lot_photo" src="{{lot.photo}}" alt="Фото відсутнє {{lot.title}}">
         <p>{{lot.description}}</p>
         {% if lot.is_open == True %}
+            
             <h4>Поточна ставка - {{max_bet}}₴</h4>
             {% comment %} <h4>Поточна ставка - {{lot.first_bet}}₴</h4> {% endcomment %}
-            <form action="{% url 'lot' id %}" method="POST">
-                {% csrf_token %}
-                {% if watched == True %}
-                <input type="submit" name='button' value="Відстежувати лот" class="btn btn-warning"></button>
-                {% else %}
-                <input type="submit" name='button' value="Не відстежувати" class="btn btn-warning"></button>
-                {% endif %}
-            </form>
+            <div class="watchlist_form_div">
+                <form action="{% url 'lot' id %}" method="POST">
+                    {% csrf_token %}
+                    {% if watched == True %}
+                    <input type="submit" name='button' value="Відстежувати лот" class="btn btn-warning"></button>
+                    {% else %}
+                    <input type="submit" name='button' value="Не відстежувати" class="btn btn-warning"></button>
+                    {% endif %}
+                </form>
+            </div>
                 <h4>Ставки:</h4>
             <ol>
                 {% for bet in bets %}
@@ -40,20 +44,22 @@
             <form action="{% url 'comment' id %}" method="POST">
                 {% csrf_token %}
                 {{new_comment_form}}
-                <button type="submit" name ='button' value="Залишити коментар" class="btn btn-primary">Залишити коментар</button>
+                <button type="submit" name ='button' value="Надіслати" class="btn btn-primary">Надіслати</button>
             </form>
             {% if user == lot.author %}
-            <form action="{% url 'close' id %}" method="POST">
-                {% csrf_token %}
-                <button type="submit">Закрити торги</button>
-            </form>
+            <div class="lot_close_button">
+                <form action="{% url 'close' id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Закрити торги</button>
+                </form>
+            </div>
             {% endif %}
         {% elif sold == False %}
             <h4>Торги завершено - лот не продано</h4>
             {% if user == lot.author %}
             <form action="{% url 'close' id %}" method="POST">
                 {% csrf_token %}
-                <button type="submit">Поновити торги</button>
+                <button type="submit" class="btn btn-success">Поновити торги</button>
             {% endif %}
         {% else %}
             <h4>Продано користувачу {{user.username}} за - {{max_bet}}₴</h4>

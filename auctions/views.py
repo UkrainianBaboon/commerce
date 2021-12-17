@@ -315,6 +315,7 @@ def category_item(request, title):
         category = "Рогата худоба"
     elif title == "comunication-devices":
         lot = lot.filter(category=6)
+        category = "Засоби зв'язку"
     elif title == "apes":
         category = "Примати"
         lot = lot.filter(category=7)
