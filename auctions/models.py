@@ -27,6 +27,7 @@ class Lot(models.Model):
     category = models.ManyToManyField(Category, related_name="lots")
     author = models.ForeignKey(User, default="1", on_delete=CASCADE, related_name="lot")
     is_open = models.BooleanField(default=1)
+    winner = models.ForeignKey(User, on_delete=CASCADE, related_name="winner")
         
     
     def __str__(self):

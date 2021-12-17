@@ -13,7 +13,6 @@
         {% if lot.is_open == True %}
             
             <h4>Поточна ставка - {{max_bet}}₴</h4>
-            {% comment %} <h4>Поточна ставка - {{lot.first_bet}}₴</h4> {% endcomment %}
             <div class="watchlist_form_div">
                 <form action="{% url 'lot' id %}" method="POST">
                     {% csrf_token %}
@@ -38,7 +37,7 @@
             <h4>Коментарі:</h4>
             <ul>
                 {% for comment in comments %}
-                <li>{{comment.user}} - {{comment.comment}}</li>
+                <li><b>{{comment.user}}:</b> {{comment.comment}}</li>
                 {% endfor %}
             </ul>
             <form action="{% url 'comment' id %}" method="POST">
@@ -62,7 +61,11 @@
                 <button type="submit" class="btn btn-success">Поновити торги</button>
             {% endif %}
         {% else %}
-            <h4>Продано користувачу {{user.username}} за - {{max_bet}}₴</h4>
+                {% if user == winner %}
+                <h4>Ви перемогли в аукціоні, зробивши ставку - {{max_bet}}₴</h4>
+                {% else %}
+                <h4>Продано користувачу {{winner}} за - {{max_bet}}₴</h4>
+                {% endif %}
         {% endif %}
     </div>
 {% endblock %}

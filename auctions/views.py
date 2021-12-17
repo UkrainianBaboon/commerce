@@ -114,9 +114,11 @@ def lot(request, id):
     user = User.objects.get(username=request.user)
     bets = Bet.objects.filter(lot=id)
     comments = Comment.objects.filter(lot=id)
+    winner = None
     sold = True
     if len(bets) >= 1:
         max_bet = bets[len(bets)-1].bet
+        winner = bets[len(bets)-1].client
     else:
         max_bet = lot.default_bet
         sold = False
@@ -162,7 +164,8 @@ def lot(request, id):
             "user": user,
             "sold": sold,
             "new_comment_form": NewCommentForm,
-            "comments": comments
+            "comments": comments,
+            "winner": winner
             
         })
         
