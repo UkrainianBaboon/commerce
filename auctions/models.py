@@ -23,11 +23,11 @@ class Lot(models.Model):
     description  = models.TextField(max_length=512)
     first_bet = models.IntegerField()
     default_bet = models.IntegerField(default=1, blank=True)
-    photo = models.URLField(max_length=200, blank=True)
+    photo = models.URLField(blank=True)
     category = models.ManyToManyField(Category, related_name="lots")
     author = models.ForeignKey(User, default="1", on_delete=CASCADE, related_name="lot")
     is_open = models.BooleanField(default=1)
-    winner = models.ForeignKey(User, on_delete=CASCADE, related_name="winner")
+    winner = models.ForeignKey(User, default=1, on_delete=CASCADE, related_name="winner")
         
     
     def __str__(self):
