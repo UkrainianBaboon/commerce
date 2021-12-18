@@ -251,14 +251,11 @@ def comment(request, id):
     form = NewCommentForm(request.POST)
     user = User.objects.get(username=request.user)
     if form.is_valid:
-        if not request.POST.get("bet"):
-            pass
-        else:
-            new_comment = form.save()
-            new_comment.lot = lot
-            new_comment.comment = request.POST.get("comment")
-            new_comment.user = user
-            new_comment.save()
+        new_comment = form.save()
+        new_comment.lot = lot
+        new_comment.comment = request.POST.get("comment")
+        new_comment.user = user
+        new_comment.save()
         return redirect("lot", id=id)
     
 def category(request):
