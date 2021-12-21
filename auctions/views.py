@@ -8,6 +8,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django import forms
 from django.contrib.auth.decorators import login_required
+from django.forms import widgets
 
 import auctions
 
@@ -45,6 +46,9 @@ class NewCommentForm(ModelForm):
         fields = ["comment"]
         labels = {
             "comment": ('Напишіть коментар')
+        }
+        widgets = {
+            "comment": widgets.Textarea
         }
 
 def index(request):
@@ -105,7 +109,7 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/register.html")
-    
+
 @login_required (login_url="login")
 def lot(request, id):
 
@@ -138,9 +142,9 @@ def lot(request, id):
         else:
             watchlist = Watchlist.objects.filter(user=user)
             watchlist.get(lot=lot).delete()
-            
-        return HttpResponseRedirect(reverse ("watchlist"))   
-                
+
+        return HttpResponseRedirect(reverse ("watchlist"))
+
     else:
         return render(request, "auctions/lot.html", {
             "lot": lot,
@@ -155,9 +159,9 @@ def lot(request, id):
             "new_comment_form": NewCommentForm,
             "comments": comments,
             "winner": winner
-            
+
         })
-        
+
 
 
 @login_required (login_url="login")
@@ -175,7 +179,7 @@ def create_lot(request):
         return render(request, "auctions/create.html", {
             "form": NewLotForm()
         })
-    
+
 def save_lot(request):
     form = NewLotForm(request.POST)
     if form.is_valid:
@@ -188,7 +192,7 @@ def save_lot(request):
 
 
 
-    
+
 @login_required (login_url="login")
 def watchlist(request):
     user = User.objects.get(username=request.user)
@@ -198,13 +202,13 @@ def watchlist(request):
     #     form = WatchListForm(request.POST, instance=watchlist)
     #     new_item = form.fields
     #     new_items = form.fields
-        
 
-    #     if form.is_valid():                        
+
+    #     if form.is_valid():
     #         watchlist.lot.add(new_item)
     #         watchlist.save()
     #     return HttpResponseRedirect(reverse ("watchlist"))
-        
+
     # else:
     return render(request, "auctions/watchlist.html",{
         "nick": user,
@@ -231,7 +235,7 @@ def bet(request, id):
             new_bet.client = user
             new_bet.save()
             lot.save()
-    
+
     return redirect("lot", id=id)
 
 @login_required (login_url="login")
@@ -257,13 +261,13 @@ def comment(request, id):
         new_comment.user = user
         new_comment.save()
         return redirect("lot", id=id)
-    
+
 def category(request):
     categories = Category.objects.all()
     return render (request, "auctions/categories_list.html",{
         "categories": categories
     })
-    
+
 def category_item(request, title):
     lot = Lot.objects.all()
     if title == "guns":

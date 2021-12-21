@@ -7,12 +7,13 @@
         <h3>{{ lot.title }}</h3>
         <h5>{% if categories.first == categories.last %}Категорія: {% else %}Категорії: {% endif %}
             {% for category in categories %}{{category}}{% if category != categories.last %}, {% else %}.{% endif %}{% endfor %}</h4>
-        <h4>Автор - {{lot.author}}</h4>
         <img class="lot_photo" src="{{lot.photo}}" alt="Фото відсутнє {{lot.title}}">
+        <h4>Автор - {{lot.author}}</h4>
         <p>{{lot.description}}</p>
         {% if lot.is_open == True %}
-            
+
             <h4>Поточна ставка - {{max_bet}}₴</h4>
+            {% if user.is_authenticated %}
             <div class="watchlist_form_div">
                 <form action="{% url 'lot' id %}" method="POST">
                     {% csrf_token %}
@@ -23,28 +24,35 @@
                     {% endif %}
                 </form>
             </div>
+            {% endif %}
                 <h4>Ставки:</h4>
             <ol>
                 {% for bet in bets %}
                 <li>{{bet.client}} - {{bet.bet}}₴</li>
                 {% endfor %}
             </ol>
+            {% if user.is_authenticated %}
             <form action="{% url 'bet' id %}" method="POST">
                 {% csrf_token %}
                 {{new_bet_form}}
                 <button type="submit" name ='button' value="Зробити ставку" class="btn btn-primary">Зробити ставку</button>
             </form>
+            {% endif %}
             <h4>Коментарі:</h4>
             <ul>
                 {% for comment in comments %}
                 <li><b>{{comment.user}}:</b> {{comment.comment}}</li>
                 {% endfor %}
             </ul>
+            {% if user.is_authenticated %}
             <form action="{% url 'comment' id %}" method="POST">
                 {% csrf_token %}
-                {{new_comment_form}}
-                <button type="submit" name ='button' value="Надіслати" class="btn btn-primary">Надіслати</button>
+                <div class="comment_form_div">
+                    {{new_comment_form}}
+                    <button type="submit" name ='button' value="Надіслати" class="btn btn-primary">Надіслати</button>
+                </div>
             </form>
+            {% endif %}
             {% if user == lot.author %}
             <div class="lot_close_button">
                 <form action="{% url 'close' id %}" method="POST">
